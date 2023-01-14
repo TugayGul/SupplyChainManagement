@@ -3,8 +3,8 @@ package com.example.supplychainmanagment.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "product")
-public class Product {
+@Table(name = "products")
+public class Products {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
