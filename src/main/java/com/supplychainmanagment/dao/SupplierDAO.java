@@ -98,7 +98,7 @@ public class SupplierDAO implements UserDetailsService {
     @Override
     public SupplierPrincipal loadUserByUsername(String email) {
         try {
-            String sql = "SELECT * FROM retailers WHERE emailadress = ?";
+            String sql = "SELECT * FROM suppliers WHERE emailadress = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();

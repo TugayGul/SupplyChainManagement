@@ -63,6 +63,37 @@ public class RetailerDAO implements UserDetailsService {
         }
         return retailer;
     }
+    public boolean addRetailer(Retailers retailer) {
+        try {
+            String sql = "INSERT INTO retailers (id, emailadress, phonenumber, password) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, retailer.getId());
+            statement.setString(2, retailer.getEmailAdress());
+            statement.setString(3, retailer.getPhoneNumber());
+            statement.setString(4, retailer.getPassword());
+            int result = statement.executeUpdate();
+            return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateRetailer(Retailers retailer) {
+        try {
+            String sql = "UPDATE retailers SET emailadress = ?, phonenumber = ?, password = ? WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, retailer.getEmailAdress());
+            statement.setString(2, retailer.getPhoneNumber());
+            statement.setString(3, retailer.getPassword());
+            statement.setInt(4, retailer.getId());
+            int result = statement.executeUpdate();
+            return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public RetailerPrincipal loadUserByUsername(String email) {
         try {
