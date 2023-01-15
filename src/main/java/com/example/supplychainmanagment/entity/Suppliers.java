@@ -7,6 +7,10 @@ import javax.persistence.*;
 public class Suppliers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "userid")
     private int userid;
 
     @Column(name = "name")
@@ -21,6 +25,8 @@ public class Suppliers {
     @Column(name = "password")
     private String password;
 
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
     public int getUserid() { return userid; }
     public void setUserid(int userid) { this.userid = userid; }
     public String getName() { return name; }
