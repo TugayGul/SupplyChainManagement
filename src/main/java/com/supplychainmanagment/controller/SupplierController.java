@@ -1,7 +1,5 @@
 package com.supplychainmanagment.controller;
 
-com.supplychainmanagment.controller;
-
 import com.supplychainmanagment.dao.SupplierDAO;
 import com.supplychainmanagment.entity.Suppliers;
 import org.springframework.web.bind.annotation.*;
