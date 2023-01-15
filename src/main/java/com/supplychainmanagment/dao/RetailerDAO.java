@@ -3,8 +3,11 @@ package com.supplychainmanagment.dao;
 import com.supplychainmanagment.db.DBConnection;
 import com.supplychainmanagment.entity.RetailerPrincipal;
 import com.supplychainmanagment.entity.Retailers;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +16,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
+@Repository
 public class RetailerDAO implements UserDetailsService {
     private DBConnection dbConnection;
     private Connection connection;
