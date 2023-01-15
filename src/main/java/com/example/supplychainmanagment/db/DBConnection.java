@@ -23,6 +23,9 @@ public class DBConnection {
             e.printStackTrace();
         }
     }
+    public Connection getConnection() {
+        return conn;
+    }
 
     public ResultSet select(String sql) {
         try {

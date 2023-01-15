@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "products")
-public class Products {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
@@ -16,7 +16,7 @@ public class Products {
     private int quantity;
 
     @Column(name = "price")
-    private double price;
+    private float price;
 
     // Getters and setters for each field
     public int getProductId() { return productId; }
@@ -25,7 +25,7 @@ public class Products {
     public void setProductName(String productName) { this.productName = productName; }
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
-    public double getPrice() { return price; }
-    public void setPrice(double price) { this.price = price; }
+    public float getPrice() { return price; }
+    public void setPrice(float price) { this.price = price; }
 
 }
