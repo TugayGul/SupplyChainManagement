@@ -1,4 +1,4 @@
-package com.example.supplychainmanagment.entity;
+package com.supplychainmanagment.entity;
 
 import javax.persistence.*;
 

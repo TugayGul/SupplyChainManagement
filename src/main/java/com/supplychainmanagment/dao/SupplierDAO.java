@@ -1,8 +1,8 @@
-package com.example.supplychainmanagment.dao;
+package com.supplychainmanagment.dao;
 
-import com.example.supplychainmanagment.db.DBConnection;
-import com.example.supplychainmanagment.entity.Retailers;
-import com.example.supplychainmanagment.entity.Suppliers;
+import com.supplychainmanagment.db.DBConnection;
+import com.supplychainmanagment.entity.Retailers;
+import com.supplychainmanagment.entity.Suppliers;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,4 +1,4 @@
-package com.example.supplychainmanagment.db;
+package com.supplychainmanagment.db;
 
 import java.sql.ResultSet;
 
