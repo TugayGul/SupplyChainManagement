@@ -1,7 +1,10 @@
 package com.supplychainmanagment.dao;
 
 import com.supplychainmanagment.db.DBConnection;
+import com.supplychainmanagment.entity.RetailerPrincipal;
 import com.supplychainmanagment.entity.Retailers;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RetailerDAO {
+public class RetailerDAO implements UserDetailsService {
     private DBConnection dbConnection;
     private Connection connection;
 
@@ -22,7 +25,7 @@ public class RetailerDAO {
     public List<Retailers> getAllRetailers() {
         List<Retailers> retailers = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM retailers";
+            String sql = "SELECT id, name, emailadress, phonenumber, password FROM retailers";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
 
@@ -32,6 +35,7 @@ public class RetailerDAO {
                 retailer.setName(resultSet.getString("name"));
                 retailer.setEmailAdress(resultSet.getString("emailadress"));
                 retailer.setPhoneNumber(resultSet.getString("phonenumber"));
+                retailer.setPassword(resultSet.getString("password"));
                 retailers.add(retailer);
             }
         } catch (SQLException e) {
@@ -43,15 +47,15 @@ public class RetailerDAO {
     public Retailers getRetailerById(int id) {
         Retailers retailer = new Retailers();
         try {
-            String sql = "SELECT * FROM retailers WHERE userid = ?";
+            String sql = "SELECT * FROM retailers WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 retailer.setId(resultSet.getInt("id"));
                 retailer.setName(resultSet.getString("name"));
-                retailer.setPhoneNumber(resultSet.getString("phonenumber"));
                 retailer.setEmailAdress(resultSet.getString("emailadress"));
+                retailer.setPhoneNumber(resultSet.getString("phonenumber"));
                 retailer.setPassword(resultSet.getString("password"));
             }
         } catch (SQLException e) {
@@ -60,36 +64,24 @@ public class RetailerDAO {
         return retailer;
     }
 
-    public boolean addRetailer(Retailers retailer) {
+    public RetailerPrincipal loadUserByUsername(String email) {
         try {
-            String sql = "INSERT INTO retailers (name, phonenumber, emailaddress, password) VALUES (?, ?, ?, ?)";
+            String sql = "SELECT * FROM retailers WHERE emailadress = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, retailer.getName());
-            statement.setString(2, retailer.getPhoneNumber());
-            statement.setString(3, retailer.getEmailAdress());
-            statement.setString(4, retailer.getPassword());
-
-            int result = statement.executeUpdate();
-            return result > 0;
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String phoneNumber = resultSet.getString("phonenumber");
+                String emailAdress = resultSet.getString("emailadress");
+                String password = resultSet.getString("password");
+                return new RetailerPrincipal(id, name, phoneNumber, emailAdress, password);
+            } else {
+                throw new UsernameNotFoundException("User with email: " + email + " not found");
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public boolean updateRetailer(Retailers retailer) {
-        try {
-            String sql = "UPDATE retailers SET name = ?, phonenumber = ?, emailaddress = ? WHERE id = ?";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, retailer.getName());
-            stmt.setString(2, retailer.getPhoneNumber());
-            stmt.setString(3, retailer.getEmailAdress());
-            stmt.setInt(4, retailer.getId());
-            int result = stmt.executeUpdate();
-            return result > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            throw new UsernameNotFoundException("User with email: " + email + " not found");
         }
     }
 }
